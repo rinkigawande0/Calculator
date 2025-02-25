@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="calculator.css">
+</head>
+<body>
+    <div>
+        <h1 id="clr"><b>Calculator</b></h1>
+    </div>
+
+    <div id="container">
+        <div class="box box1" id="new"></div>
+            <div class="box box2" id="tag">1</div>
+            <div class="box box3" id="tag">2</div>
+            <div class="box box4" id="tag">3</div>
+            <div class="box box5" id="tag">+</div>
+            <div class="box box6" id="tag">4</div>
+            <div class="box box7" id="tag">5</div>
+            <div class="box box8" id="tag">6</div>
+            <div class="box box9" id="tag">-</div>
+            <div class="box box10" id="tag">7</div>
+            <div class="box box11" id="tag">8</div>
+            <div class="box box12" id="tag">9</div>
+            <div class="box box13" id="tag">*</div>
+            <div class="box box14" id="tag">C</div>
+            <div class="box box15" id="tag">0</div>
+            <div class="box box16" id="tag">=</div>
+            <div class="box box17" id="tag">/</div> 
+        
+    </div>
+</body>
+</html>
+
+<script>
+    let keys = document.querySelectorAll("#container .box");
+    // console.log(keys);
+    let bag="";
+    let pressTimeout;
+    let pressCount=0;
+    for(let i=0;i<keys.length;i++){
+        keys[i].addEventListener("click",value);
+    }
+
+    function value(event){
+        let result = event.target.innerText;
+        // console.log(result);
+        // if(result=="C"){
+        //     bag="";
+        //     document.querySelector("#new").innerText=bag;
+        // }
+        if (result == "C") {
+                    pressCount++;
+                    clearTimeout(pressTimeout);
+                    pressTimeout = setTimeout(() => {
+                        if (pressCount == 1) {
+                            // Single press: remove last character
+                            bag = bag.slice(0, -1);
+                        } else if (pressCount == 2) {
+                            // Double press: clear all
+                            bag = "";
+                        }
+                        pressCount = 0;
+                        document.querySelector("#new").innerText = bag;
+                    }, 300);}
+       else if(result=="="){
+            let ans = eval(bag);
+            // console.log(ans);
+            // let answer = ans;
+            document.querySelector("#new").innerText=ans;
+            bag=ans.toString();
+            // document.querySelector("#new").innerText=" ";
+        }
+        else{
+            bag+=result;
+            document.querySelector("#new").innerText=bag;
+        } 
+    }
+     
+</script>
+
+
+
